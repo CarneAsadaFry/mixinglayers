@@ -1,0 +1,57 @@
+<comment>
+problem    = Kelvin-Helmholtz instability with cooling
+reference  = Esquivel et al (2006)
+configure  = --prob=mixing_layer
+
+<job>
+problem_id = mixing_layer # problem ID: basename of output filenames
+
+<output1>
+file_type  = hdf5         # Binary data dump
+variable   = uov          # variables to be output
+dt         = 1.884e12     # time increment between outputs
+
+<time>
+cfl_number  = 0.4         # The Courant, Friedrichs, & Lewy (CFL) Number
+nlim        = -1          # cycle limit
+tlim        = 1.5768e15   # time limit
+integrator  = vl2         # time integration algorithm
+xorder      = 2           # order of spatial reconstruction
+ncycle_out  = 1           # interval for stdout summary info
+
+<mesh>
+nx1        = 256          # Number of zones in X1-direction
+x1min      = -1.543e19    # minimum value of X1
+x1max      = 1.543e19     # maximum value of X1
+ix1_bc     = periodic     # inner-X1 boundary flag
+ox1_bc     = periodic     # inner-X1 boundary flag
+
+nx2        = 640          # Number of zones in X2-direction
+x2min      = -2.469e19    # minimum value of X2
+x2max      = 2.469e19     # maximum value of X2
+ix2_bc     = user         # inner-X2 boundary flag
+ox2_bc     = reflecting   # inner-X2 boundary flag
+
+nx3        = 1            # Number of zones in X3-direction
+x3min      = -0.5         # minimum value of X3
+x3max      = 0.5          # maximum value of X3
+ix3_bc     = periodic     # inner-X3 boundary flag
+ox3_bc     = periodic     # inner-X3 boundary flag
+
+<hydro>
+iso_sound_speed = 1.0
+gamma      = 1.6666666    # gamma = C_p/C_v
+dfloor     = 1.0e-27
+pfloor     = 1.0e-40
+
+<problem>                 # CGS units
+T_hot      = 1e6          # temperature of hot gas
+T_warm     = 1e4          # temperature of warm gas
+n_hot      = 1e-3         # number density of hot gas
+n_warm     = 1e-1         # number density of warm gas
+v_hot      = 50e5         # velocity of hot gass
+num_modes  = 32           # number of normal modes in initial perturbation
+min_mode   = 3            # smallest normal mode
+mode_gap   = 2            # gap between normal modes
+mag        = 0.02         # magnitude of the kick as percentage of the box
+gas_ratio  = 0.25         # The position of the interface as percentage length
